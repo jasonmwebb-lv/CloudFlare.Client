@@ -28,5 +28,23 @@ namespace CloudFlare.Client.Test.TestData
                 Js = FeatureStatus.On
             }
         };
+
+        public static List<BrowserCacheTTLSetting> BrowserCacheTTLSettings { get; set; } = new()
+        {
+            new BrowserCacheTTLSetting
+            {
+                Id = "browser_cache_ttl",
+                Value = 0,
+                Editable = true,
+                ModifiedOn = DateTime.Now,
+            },
+            new BrowserCacheTTLSetting
+            {
+                Id = "browser_cache_ttl",
+                Value = 30,
+                Editable = true,
+                ModifiedOn = DateTime.UtcNow,
+            }
+        };
     }
 }

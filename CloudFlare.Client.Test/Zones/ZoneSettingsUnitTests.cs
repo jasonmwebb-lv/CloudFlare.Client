@@ -99,5 +99,42 @@ namespace CloudFlare.Client.Test.Zones
 
             alwaysUseHttpsUnderTest.Result.Should().BeEquivalentTo(minify);
         }
+
+        [Fact]
+        public async Task TestUpdateBrowserCacheTTLSettingAsync()
+        {
+            var zone = ZoneTestData.Zones.First();
+            var bcTTL = ZoneSettingsTestData.BrowserCacheTTLSettings.First().Value;
+            var bcTTLUpdateResult = ZoneSettingsTestData.BrowserCacheTTLSettings.Last();
+
+            _wireMockServer
+                .Given(Request.Create().WithPath($"/{ZoneEndpoints.Base}/{zone.Id}/{ZoneSettingsEndpoints.BrowserCacheTTL}").UsingPatch())
+                .RespondWith(Response.Create().WithStatusCode(200)
+                    .WithBody(WireMockResponseHelper.CreateTestResponse(bcTTLUpdateResult)));
+
+            using var client = new CloudFlareClient(WireMockConnection.ApiKeyAuthentication, _connectionInfo);
+
+            var alwaysUseHttpsUnderTest = await client.Zones.ZoneSettings.UpdateBrowserCacheTTLSettingAsync(zone.Id, bcTTL);
+
+            alwaysUseHttpsUnderTest.Result.Should().BeEquivalentTo(bcTTLUpdateResult);
+        }
+
+        [Fact]
+        public async Task TestGetBrowserCacheTTLSettingAsync()
+        {
+            var zone = ZoneTestData.Zones.First();
+            var bcTTL = ZoneSettingsTestData.BrowserCacheTTLSettings.First();
+
+            _wireMockServer
+                .Given(Request.Create().WithPath($"/{ZoneEndpoints.Base}/{zone.Id}/{ZoneSettingsEndpoints.BrowserCacheTTL}").UsingGet())
+                .RespondWith(Response.Create().WithStatusCode(200)
+                    .WithBody(WireMockResponseHelper.CreateTestResponse(bcTTL)));
+
+            using var client = new CloudFlareClient(WireMockConnection.ApiKeyAuthentication, _connectionInfo);
+
+            var alwaysUseHttpsUnderTest = await client.Zones.ZoneSettings.GetBrowserCacheTTLSettingAsync(zone.Id);
+
+            alwaysUseHttpsUnderTest.Result.Should().BeEquivalentTo(bcTTL);
+        }
     }
 }

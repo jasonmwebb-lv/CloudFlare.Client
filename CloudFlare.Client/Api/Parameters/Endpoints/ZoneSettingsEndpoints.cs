@@ -8,5 +8,6 @@ namespace CloudFlare.Client.Api.Parameters.Endpoints
     {
         public const string AlwaysUseHttps = "settings/always_use_https";
         public const string Minify = "settings/minify";
+        public const string BrowserCacheTTL = "settings/browser_cache_ttl";
     }
 }

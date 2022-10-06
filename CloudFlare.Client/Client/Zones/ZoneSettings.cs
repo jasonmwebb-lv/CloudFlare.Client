@@ -50,5 +50,19 @@ namespace CloudFlare.Client.Client.Zones
             var requestUri = $"{ZoneEndpoints.Base}/{zoneId}/{ZoneSettingsEndpoints.Minify}";
             return await Connection.PatchAsync<MinifySetting>(requestUri, setting, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <inheritdoc />
+        public async Task<CloudFlareResult<BrowserCacheTTLSetting>> GetBrowserCacheTTLSettingAsync(string zoneId, CancellationToken cancellationToken = default)
+        {
+            var requestUri = $"{ZoneEndpoints.Base}/{zoneId}/{ZoneSettingsEndpoints.BrowserCacheTTL}";
+            return await Connection.GetAsync<BrowserCacheTTLSetting>(requestUri, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<CloudFlareResult<BrowserCacheTTLSetting>> UpdateBrowserCacheTTLSettingAsync(string zoneId, int value, CancellationToken cancellationToken = default)
+        {
+            var requestUri = $"{ZoneEndpoints.Base}/{zoneId}/{ZoneSettingsEndpoints.BrowserCacheTTL}";
+            return await Connection.PatchAsync<BrowserCacheTTLSetting, int>(requestUri, value, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
