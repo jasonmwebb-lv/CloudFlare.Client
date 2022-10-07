@@ -43,6 +43,12 @@ namespace CloudFlare.Client.Client.Zones
         public IZoneSettings ZoneSettings { get; }
 
         /// <summary>
+        /// Worker services for <see cref="Zone"/>
+        /// </summary>
+        /// <value>The implementation of the worker services interaction</value>
+        public IWorkers Workers { get; }
+
+        /// <summary>
         /// Create a new zone
         /// </summary>
         /// <param name="newZone">The new zone to add</param>
